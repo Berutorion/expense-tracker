@@ -18,3 +18,11 @@ app.listen(port, () => {
 app.get("/", (reg, res) => {
     res.render("index");
 })
+
+app.get("/new", (req, res) => {
+    res.render("new");
+})
+
+app.get("/edit", (req, res) => {
+    res.render("edit");
+})
