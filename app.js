@@ -5,7 +5,8 @@ const { appendFile } = require("fs");
 require("dotenv").config();
 
 const port = process.env.PORT || 3000;
-
+//connet to mongoDB
+require("./config/mongoose");
 //set handlebars
 app.engine(".hbs", engine({ extname: ".hbs" }));
 app.set("view engine", ".hbs");
