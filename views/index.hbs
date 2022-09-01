@@ -2,10 +2,10 @@
   <div class="raw">
     <div class="col">
       <select class="form-select" aria-label="Default select example">
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+        <option selected>類別</option>
+        {{#each category}}
+          <option value={{this.id}}>{{this.name}}</option>
+        {{/each}}
       </select>
     </div>
     <div class="col">
@@ -15,6 +15,7 @@
 
   <div class="raw">
     <ul class="list-group">
+
       <li class="list-group-item">
         <div class="row my-auto text-center">
           <div class="col-1"><i class="fa-solid fa-house"></i></div>
@@ -25,7 +26,7 @@
           <div class="col-2">60</div>
           <div class="col-auto">
             <a class="btn btn-secondary" href="#">detail</a>
-            <a class="btn btn-success" href="#">edit</a>
+            <a class="btn btn-success" href="/records/edit">edit</a>
             <form action="#" method="POST" style="display: inline;">
               <button class="btn btn-danger" type="submit">delete</button>
             </form>
@@ -34,6 +35,9 @@
         </div>
 
       </li>
+
     </ul>
+
+    <a class="btn btn-primary" href="/records/new">新增支出</a>
   </div>
 </div>

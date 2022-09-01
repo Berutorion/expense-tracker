@@ -15,13 +15,12 @@ const RecordSchema = new mongoose.Schema({
         min:0
     } ,
     userId: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.ObjectId,
         ref: "User",
-        required:true
+        // required:true
     },
     categoryId: {
-        type: Schema.Types.ObjectId,
-        ref: "Category",
+        type:String,
         required:true
     }
 })
