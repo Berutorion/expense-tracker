@@ -10,32 +10,39 @@
     </div>
     <div class="col">
       <p>總金額 <strong>25260</strong> </p>
+
     </div>
   </div>
 
   <div class="raw">
     <ul class="list-group">
+      {{#each records}}
+        <li class="list-group-item">
+          <div class="row my-auto text-center">
+            <div class="col-1"><i class="fa-solid fa-house"></i></div>
+            <div class="col-4 me-auto">
+              <div class="fw-bold">{{this.name}}</div>
+              {{#dateformate this.date}}{{/dateformate}}
+            </div>
+            <div class="col-2">{{this.amount}}</div>
+            <div class="col-auto">
+              <a
+                class="btn btn-success"
+                href="/records/{{this._id}}/edit"
+              >edit</a>
+              <form
+                action="/records/{{this._id}}?_method=DELETE"
+                method="POST"
+                style="display: inline;"
+              >
+                <button class="btn btn-danger" type="submit">delete</button>
+              </form>
+            </div>
 
-      <li class="list-group-item">
-        <div class="row my-auto text-center">
-          <div class="col-1"><i class="fa-solid fa-house"></i></div>
-          <div class="col-4 me-auto">
-            <div class="fw-bold">Subheading</div>
-            Content for list item
           </div>
-          <div class="col-2">60</div>
-          <div class="col-auto">
-            <a class="btn btn-secondary" href="#">detail</a>
-            <a class="btn btn-success" href="/records/edit">edit</a>
-            <form action="#" method="POST" style="display: inline;">
-              <button class="btn btn-danger" type="submit">delete</button>
-            </form>
-          </div>
 
-        </div>
-
-      </li>
-
+        </li>
+      {{/each}}
     </ul>
 
     <a class="btn btn-primary" href="/records/new">新增支出</a>

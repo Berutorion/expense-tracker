@@ -1,14 +1,26 @@
 <div class="container mt-3">
 
   <p>*必填欄位 <strong>請輸入你的支出</strong></p>
-  <form action="">
+  <form action="/records/{{record._id}}?_method=PUT" method="POST">
     <div class="mb-3">
       <label class="form-label" for="name">名稱*</label>
-      <input class="form-control" type="text" name="name" required />
+      <input
+        class="form-control"
+        type="text"
+        name="name"
+        value={{record.name}}
+        required
+      />
     </div>
     <div class="mb-3">
       <label class="form-label" for="date">日期*</label>
-      <input class="form-control" type="date" name="date" required />
+      <input
+        class="form-control"
+        type="date"
+        name="date"
+        value=  {{#dateformate record.date}}{{/dateformate}}
+        required
+      />
     </div>
     <div class="mb-3">
       <label class="form-label" for="category">類別*</label>
@@ -18,15 +30,21 @@
         name="category"
         required
       >
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+        <option selected>{{#set record.categoryId categories}}{{/set}}</option>
+        {{#each categories}}
+          <option value={{this.id}}>{{this.name}}</option>
+        {{/each}}
       </select>
     </div>
     <div class="mb-3">
       <label class="form-label" for="amount">金額*</label>
-      <input class="form-control" type="text" name="amount" required />
+      <input
+        class="form-control"
+        type="text"
+        name="amount"
+        value={{record.amount}}
+        required
+      />
     </div>
     <button type="submit">送出</button>
 

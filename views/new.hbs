@@ -1,7 +1,7 @@
 <div class="container mt-3">
 
   <p>*必填欄位 <strong>請輸入你的支出</strong></p>
-  <form action="">
+  <form action="/records" method="POST">
     <div class="mb-3">
       <label class="form-label" for="name">名稱*</label>
       <input class="form-control" type="text" name="name" required />
@@ -15,11 +15,11 @@
       <select
         class="form-select"
         aria-label="Default select example"
-        name="category"
+        name="categoryId"
         required
       >
         <option selected>Open this select menu</option>
-        {{#each category}}
+        {{#each categories}}
           <option value={{this.id}}>{{this.name}}</option>
         {{/each}}
       </select>

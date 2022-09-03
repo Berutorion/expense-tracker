@@ -10,7 +10,7 @@ const RecordSchema = new mongoose.Schema({
         type: Date,
         default:Date.now
     },
-    amout: {
+    amount: {
         type: Number,
         min:0
     } ,
