@@ -1,14 +1,15 @@
 const passport = require("passport");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
-const Localpassport = require("passport-local").Strategy;
-
+const LocalStrategy = require("passport-local").Strategy;
+const FacebookStrategy = require("passport-facebook").Strategy;
 module.exports = (app) => {
 
     app.use(passport.initialize());
     app.use(passport.session());
 
-    passport.use(new Localpassport({ usernameField: "email" }, async (email, password, done) => {
+    //local
+    passport.use(new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
         try {
             const user = await User.findOne({ email });
             if (!user) {
@@ -28,6 +29,32 @@ module.exports = (app) => {
             done(error, false);
         }
     
+    }))
+    //facebook
+    passport.use(new FacebookStrategy({
+        clientID: process.env.FACEBOOK_APP_ID,
+        clientSecret: process.env.FACEBOOK_APP_SECRET,
+        callbackURL: process.env.CALLBACKURL,
+        profileFields: ['id', 'displayName', 'email']
+    }, async(accessToken, refreshToken, profile, done) => {
+        const { email,name } = profile._json;
+
+        try {
+            const user = await User.findOne({ email })
+            if (user) {
+                return done(null, user, {message: "登入成功"});
+            }
+
+            const hash = await bcrypt.hash(Math.random().toString(36).slice(-8),
+                await bcrypt.genSalt(10));
+            const registeredUser = await User.create({ name, email, password: hash });
+            done(null, registeredUser);
+        
+        } catch (error) {
+            done(error, false);
+        }
+
+      
     }))
 
     passport.serializeUser((user, done) => {
