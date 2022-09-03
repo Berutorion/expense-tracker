@@ -73,7 +73,7 @@ router.put("/:_id", async(req, res) => {
 router.delete("/:_id", async (req, res) => {
     const { _id } = req.params;
     try {
-    await Record.deleteOne({ _id });
+        await Record.deleteOne({ _id });
     } catch (error) {
         console.log(error);
     }
