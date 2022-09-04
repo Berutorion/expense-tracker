@@ -12,7 +12,7 @@
 1.確認已安裝Node.js  
 2.將本專案clone進本地端
 ```js
-git clone https://github.com/Berutorion/alphacamp-practicce.git
+gh repo clone Berutorion/expense-tracker
 ```
 3.安裝套件 package.json 中的相依套件
 ```js
