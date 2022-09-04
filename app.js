@@ -6,6 +6,7 @@ const router = require("./routes/router");
 const methodOverride = require('method-override')
 const session = require("express-session");
 const flash = require("connect-flash");
+require("./views/helper/helper");
 
 const port = process.env.PORT || 3000;
 //connet to mongoDB

@@ -2,12 +2,20 @@
 <div class="container text-center mx-auto mt-3">
   <div class="raw">
     <div class="col">
-      <select class="form-select" aria-label="Default select example">
-        <option selected>類別</option>
-        {{#each category}}
+        <form action="/records" id="categoryForm">
+      <select onchange="submitForm()" class="form-select"  name="categoryId"  aria-label="Default select example">
+        {{#if category }} 
+        <option selected value={{category.id}} >{{category.name}}</option> 
+        {{else}}
+        <option selected disabled>類別</option>
+        {{/if}}
+        {{#each categories}}
           <option value={{this.id}}>{{this.name}}</option>
         {{/each}}
       </select>
+
+        </form>
+     
     </div>
     <div class="col">
       <p>總金額 <strong>25260</strong> </p>
@@ -49,3 +57,10 @@
     <a class="btn btn-primary" href="/records/new">新增支出</a>
   </div>
 </div>
+
+<script>
+function submitForm(){
+const category = document.getElementById("categoryForm");
+category.submit();
+}
+</script>

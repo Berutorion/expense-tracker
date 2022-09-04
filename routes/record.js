@@ -4,17 +4,37 @@ const router = require("express").Router();
 const Handlebars = require("handlebars");
 
 //列出清單
-router.get("/", async(req, res) => {
-    const records = await Record.find().lean();
-    const categories = await Category.find().sort({ id: "asc" }).lean();
+router.get("/", async (req, res) => {
+    try {
+        const categories = await Category.find().sort({ id: "asc" }).lean();
+        const  categoryId  = Number(req.query.categoryId);
+        if (categoryId) {
+            const records = await Record.find({ categoryId }).lean();
+            const category = categories.find((item) => {return item.id === categoryId})
+            console.log(category);
+            return res.render("index", {
+                records, categories, category, helpers: {
+                    "dateformate": (date) => {
+                        return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+                    }
+            } });
+        } else {
+            const records = await Record.find().lean();
+            res.render("index", {
+                records, categories, helpers: {
+                    "dateformate": (date) => {
+                        return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+                    }
+                }
+            });
+        }
+    } catch (error) {
+            console.log(error);
+   }
+  
+}
+    )
 
-    res.render("index", {
-        records, categories, helpers: {
-            "dateformate": (date) => {
-                return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
-            }
-    }});
-})
 ///獲得新增表單
 router.get("/new", async(req, res) => {
      const categories = await Category.find().sort({ id: "asc" }).lean();
@@ -52,6 +72,7 @@ router.get("/:_id/edit", async (req, res) => {
 //新增資料
 router.post("/", async(req, res) => {
     const { name, date, categoryId, amount } = req.body;
+    console.log("new");
     try {
         await Record.create({ name, date, categoryId, amount });
         req.flash("success_msg","新增成功");
@@ -61,6 +82,8 @@ router.post("/", async(req, res) => {
     }  
 
 })
+
+
 //修改資料
 router.put("/:_id", async(req, res) => {
     const { name, date, categoryId, amount } = req.body;
@@ -83,4 +106,6 @@ router.delete("/:_id", async (req, res) => {
     }
   res.redirect("/records")
 })
+
+
 module.exports = router;
