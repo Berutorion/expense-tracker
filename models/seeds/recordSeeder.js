@@ -12,7 +12,7 @@ db.once("open", async () => {
     try {
         //如果已經建立過直接結束程式
         if (await User.findOne({email})) {
-            console.log("種子資料已經建立");
+            console.log("種子資料已經存在");
             process.exit();
         }
         //建立使用者資料
@@ -24,7 +24,7 @@ db.once("open", async () => {
             const { name, date, amount, categoryId } = record;
         return await Record.create({name, date, amount, categoryId ,userId})
            })).then(() => {
-               console.log("種子資料已建立完成");
+               console.log("種子資料已建立完成(record)");
                process.exit();
      })
     } catch (error) {

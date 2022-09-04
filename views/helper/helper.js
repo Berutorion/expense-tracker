@@ -27,8 +27,6 @@ Handlebars.registerHelper("totalAmount", (records) => {
 })
 
 Handlebars.registerHelper("setIcon", (categoryIconList, categoryId,option) => {
-    console.log(categoryIconList)
-    console.log(categoryId)
     const icon = categoryIconList.find((icon) => { return icon.id === Number(categoryId) })
     return new Handlebars.SafeString(icon.src);
 })

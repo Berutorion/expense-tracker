@@ -11,11 +11,11 @@ router.get("/", async (req, res) => {
         const categoryId = Number(req.query.categoryId);
         const userId = req.user._id;
         if (categoryId) {
-            const records = await Record.find({ categoryId,userId}).lean();
+            const records = await Record.find({ categoryId,userId}).sort({date:"asc"}).lean();
             const category = categories.find((item) => {return item.id === categoryId})
             return res.render("index", {records, categories, category,categoryIconList });
         } else {
-            const records = await Record.find({userId}).lean();
+            const records = await Record.find({userId}).sort({date:"asc"}).lean();
             res.render("index", {records, categories,categoryIconList});
         }
     } catch (error) {

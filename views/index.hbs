@@ -2,8 +2,8 @@
 <div class="container text-center mx-auto mt-3">
   <div class="raw">
     <div class="col">
-        <form action="/records" id="categoryF orm">
-      <select onchange="submitForm()" class="form-select"  name="categoryId"  aria-label="Default select example">
+        <form action="/records" id="categoryForm" >
+      <select  class="form-select" onchange="submitForm()"  name="categoryId"  aria-label="Default select example">
         {{#if category }} 
         <option selected value={{category.id}} >{{category.name}}</option> 
         {{else}}
