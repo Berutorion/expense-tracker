@@ -18,7 +18,7 @@
      
     </div>
     <div class="col">
-      <p>總金額 <strong>{{#totalAmount records}}{{/totalAmount}}</strong> </p>
+      <h6>總金額 <h2>{{#totalAmount records}}{{/totalAmount}}</h2> </h6>
 
     </div>
   </div>
@@ -33,7 +33,7 @@
             <div class="col-1">{{#setIcon ../categoryIconList this.categoryId}}{{this.src}}{{/setIcon}}</div>
             <div class="col-4 me-auto">
               <div class="fw-bold">{{this.name}}</div>
-              {{#dateformate this.date}}{{/dateformate}}
+             <h6>{{#dateformate this.date}}{{/dateformate}}</h6> 
             </div>
             <div class="col-2">{{this.amount}}</div>
             <div class="col-auto">
