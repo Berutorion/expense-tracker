@@ -17,8 +17,8 @@ router.get("/", async(req, res) => {
 })
 ///獲得新增表單
 router.get("/new", async(req, res) => {
-     const category = await Category.find().sort({ id: "asc" }).lean();
-    res.render("new",{category});
+     const categories = await Category.find().sort({ id: "asc" }).lean();
+    res.render("new",{categories});
 })
 //獲得修改表單
 router.get("/:_id/edit", async (req, res) => {
@@ -37,8 +37,10 @@ router.get("/:_id/edit", async (req, res) => {
                 return result
             },
             "dateformate": (date) => {
-            const month = (date.getMonth() > 10) ? date.getMonth() : "0" + date.getMonth();
-            const dates = date.getFullYear() + "-" + month + "-" + date.getDate();
+                const month = (date.getMonth() > 10) ? date.getMonth() : "0" + date.getMonth();
+                const day = (date.getDay() > 10) ? date.getDay() : "0" + date.getDay();
+                const dates = date.getFullYear() + "-" + month + "-" + day;
+                console.log(dates);
                return dates;
             }
         }});
@@ -52,7 +54,8 @@ router.post("/", async(req, res) => {
     const { name, date, categoryId, amount } = req.body;
     try {
         await Record.create({ name, date, categoryId, amount });
-        res.redirect("/");
+        req.flash("success_msg","新增成功");
+        res.redirect("/records");
     } catch (error) {
         console.log(error);
     }  
@@ -63,7 +66,8 @@ router.put("/:_id", async(req, res) => {
     const { name, date, categoryId, amount } = req.body;
     const {_id} = req.params;
     try {
-    await Record.updateOne({ _id }, { name, date, categoryId, amount })
+        await Record.updateOne({ _id }, { name, date, categoryId, amount })
+        req.flash("success_msg","修改成功");
     res.redirect("/records");
     } catch (error) {
         console.log(error);

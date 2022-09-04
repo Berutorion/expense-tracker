@@ -3,7 +3,7 @@
 
     <div class="card card-body">
       <h1 class="text-center mt-3">Register</h1>
-      {{!-- {{> error}} --}}
+      {{> message}}
       <form action="/users/register" method="POST">
         <div class="mb-3">
           <label for="name" class="form-label">Name</label>
@@ -14,6 +14,7 @@
             name="name"
             placeholder="Enter Name"
             value="{{name}}"
+            required
           />
         </div>
         <div class="mb-3">
@@ -25,6 +26,7 @@
             name="email"
             placeholder="Enter Email"
             value="{{email}}"
+            required
           />
         </div>
         <div class="mb-3">
@@ -36,6 +38,7 @@
             id="password"
             placeholder="enter password"
             value="{{password}}"
+            required
           />
         </div>
         <div class="mb-3">
@@ -47,6 +50,7 @@
             id="confirmPassword"
             placeholder="Enter Confirm Password"
             value="{{confirmPassword}}"
+            required
           />
         </div>
 

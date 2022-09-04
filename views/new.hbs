@@ -18,7 +18,7 @@
         name="categoryId"
         required
       >
-        <option selected>Open this select menu</option>
+        <option selected disabled>類別</option>
         {{#each categories}}
           <option value={{this.id}}>{{this.name}}</option>
         {{/each}}
@@ -26,7 +26,13 @@
     </div>
     <div class="mb-3">
       <label class="form-label" for="amount">金額*</label>
-      <input class="form-control" type="text" name="amount" required />
+      <input
+        class="form-control"
+        type="number"
+        min="0"
+        name="amount"
+        required
+      />
     </div>
     <button type="submit">新增支出</button>
 

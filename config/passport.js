@@ -9,21 +9,23 @@ module.exports = (app) => {
     app.use(passport.session());
 
     //local
-    passport.use(new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
+    passport.use(new LocalStrategy({ usernameField: "email", passReqToCallback: true }, async (req, email, password, done) => {
+        
+
         try {
             const user = await User.findOne({ email });
             if (!user) {
-                console.log("這個email還沒有註冊!");
-                return done(null, false, { message: "這個email還沒有註冊!" });
+                req.flash("warning_msg" , "這個email還沒有註冊!")
+                return done(null, false,);
             } 
             bcrypt.compare(password, user.password, (err,isMatch) => {
                 if (err) return done(err, false);
                 if (isMatch) {
-                    console.log("登入成功");
-                    return done(null, user, { message: "登入成功" });
+                    req.flash("success_msg" ,"登入成功" )
+                    return done(null, user,);
                 } 
-                console.log("帳號或密碼錯誤");
-                return done(null, false, { message: "帳號或密碼錯誤" });
+                req.flash("warning_msg" , "帳號或密碼錯誤!")
+                return done(null, false);
          })
         } catch (error) {
             done(error, false);
@@ -35,36 +37,36 @@ module.exports = (app) => {
         clientID: process.env.FACEBOOK_APP_ID,
         clientSecret: process.env.FACEBOOK_APP_SECRET,
         callbackURL: process.env.CALLBACKURL,
-        profileFields: ['id', 'displayName', 'email']
-    }, async(accessToken, refreshToken, profile, done) => {
+        profileFields: ['id', 'displayName', 'email'],
+        passReqToCallback:true
+    }, async (req,accessToken, refreshToken, profile, done) => {
         const { email,name } = profile._json;
-
         try {
             const user = await User.findOne({ email })
             if (user) {
-                return done(null, user, {message: "登入成功"});
+                req.flash("success_msg" ,"登入成功" )
+                return done(null, user);
             }
 
             const hash = await bcrypt.hash(Math.random().toString(36).slice(-8),
                 await bcrypt.genSalt(10));
             const registeredUser = await User.create({ name, email, password: hash });
-            done(null, registeredUser);
+            req.flash("success_msg" ,"登入成功" )
+            return  done(null, registeredUser);
         
         } catch (error) {
-            done(error, false);
+            return  done(error, false);
         }
 
       
     }))
 
     passport.serializeUser((user, done) => {
-        console.log("serializeUser" , user);
         return done(null, user.id);
     })
 
     passport.deserializeUser(async (id, done) => {
         try {
-            console.log("deserializeUser", id);
             const user = await User.findById(id);
             return done(null, user);
         } catch (error) {

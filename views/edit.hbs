@@ -30,7 +30,7 @@
         name="category"
         required
       >
-        <option selected>{{#set record.categoryId categories}}{{/set}}</option>
+        <option selected disabled>{{#set record.categoryId categories}}{{/set}}</option>
         {{#each categories}}
           <option value={{this.id}}>{{this.name}}</option>
         {{/each}}
@@ -40,7 +40,8 @@
       <label class="form-label" for="amount">金額*</label>
       <input
         class="form-control"
-        type="text"
+        type="number"
+        min="0"
         name="amount"
         value={{record.amount}}
         required
