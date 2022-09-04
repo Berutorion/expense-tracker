@@ -2,7 +2,7 @@
 <div class="container text-center mx-auto mt-3">
   <div class="raw">
     <div class="col">
-        <form action="/records" id="categoryForm">
+        <form action="/records" id="categoryF orm">
       <select onchange="submitForm()" class="form-select"  name="categoryId"  aria-label="Default select example">
         {{#if category }} 
         <option selected value={{category.id}} >{{category.name}}</option> 
@@ -18,17 +18,18 @@
      
     </div>
     <div class="col">
-      <p>總金額 <strong>25260</strong> </p>
+      <p>總金額 <strong>{{#totalAmount records}}{{/totalAmount}}</strong> </p>
 
     </div>
   </div>
+
 
   <div class="raw">
     <ul class="list-group">
       {{#each records}}
         <li class="list-group-item">
           <div class="row my-auto text-center">
-            <div class="col-1"><i class="fa-solid fa-house"></i></div>
+            <div class="col-1">{{#setIcon ../categoryIconList this.categoryId}}{{/setIcon}}</div>
             <div class="col-4 me-auto">
               <div class="fw-bold">{{this.name}}</div>
               {{#dateformate this.date}}{{/dateformate}}

@@ -1,0 +1,9 @@
+{
+    "categoryIcon" : [ 
+        { "id": 1,"name":"居家物業","src": "<i class=\"categoryIcon fa-solid fa-house\"></i>"},
+        { "id": 2,"name":"交通出行","src": "<i class=\"categoryIcon fa-solid fa-van-shuttle\"></i>"},
+        { "id": 3,"name":"休閒娛樂","src": "<i class=\"categoryIcon fa-solid fa-face-grin-beam\"></i>"},
+        { "id": 4,"name":"餐飲食品","src": "<i class=\"categoryIcon fa-solid fa-utensils\"></i>"},
+        { "id": 5,"name":"其他","src": "<i class=\"categoryIcon fa-solid fa-pen\"></i>"}
+    ]
+}

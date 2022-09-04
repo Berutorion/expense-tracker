@@ -1,10 +1,12 @@
 const Record = require("../models/Record");
 const Category = require("../models/Category");
 const router = require("express").Router();
-const Handlebars = require("handlebars");
+const categoryIconList = require("../data/categoryIcon.json").categoryIcon;
+
 
 //列出清單
 router.get("/", async (req, res) => {
+    console.log(categoryIconList);
     try {
         const categories = await Category.find().sort({ id: "asc" }).lean();
         const  categoryId  = Number(req.query.categoryId);
@@ -12,21 +14,10 @@ router.get("/", async (req, res) => {
             const records = await Record.find({ categoryId }).lean();
             const category = categories.find((item) => {return item.id === categoryId})
             console.log(category);
-            return res.render("index", {
-                records, categories, category, helpers: {
-                    "dateformate": (date) => {
-                        return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
-                    }
-            } });
+            return res.render("index", {records, categories, category,categoryIconList });
         } else {
             const records = await Record.find().lean();
-            res.render("index", {
-                records, categories, helpers: {
-                    "dateformate": (date) => {
-                        return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
-                    }
-                }
-            });
+            res.render("index", {records, categories,categoryIconList});
         }
     } catch (error) {
             console.log(error);
@@ -46,24 +37,7 @@ router.get("/:_id/edit", async (req, res) => {
         const { _id } = req.params;
         const record = await Record.findOne({ _id }).lean();
         const categories = await Category.find().sort({ id: "asc" }).lean();
-        res.render("edit", { record, categories, helpers:{
-            "set": (categoryId, categoryList) => {
-                let result = "";
-                categoryList.forEach((category) => {
-                    if (category.id == categoryId) {
-                        result = category.name;
-                    }  
-                })
-                return result
-            },
-            "dateformate": (date) => {
-                const month = (date.getMonth() > 10) ? date.getMonth() : "0" + date.getMonth();
-                const day = (date.getDay() > 10) ? date.getDay() : "0" + date.getDay();
-                const dates = date.getFullYear() + "-" + month + "-" + day;
-                console.log(dates);
-               return dates;
-            }
-        }});
+        res.render("edit", { record, categories});
     } catch (error) {
         console.log(error);
     }
