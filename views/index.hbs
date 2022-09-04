@@ -24,12 +24,13 @@
   </div>
 
 
+
   <div class="raw">
     <ul class="list-group">
       {{#each records}}
         <li class="list-group-item">
           <div class="row my-auto text-center">
-            <div class="col-1">{{#setIcon ../categoryIconList this.categoryId}}{{/setIcon}}</div>
+            <div class="col-1">{{#setIcon ../categoryIconList this.categoryId}}{{this.src}}{{/setIcon}}</div>
             <div class="col-4 me-auto">
               <div class="fw-bold">{{this.name}}</div>
               {{#dateformate this.date}}{{/dateformate}}

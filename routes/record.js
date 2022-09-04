@@ -6,17 +6,16 @@ const categoryIconList = require("../data/categoryIcon.json").categoryIcon;
 
 //列出清單
 router.get("/", async (req, res) => {
-    console.log(categoryIconList);
     try {
         const categories = await Category.find().sort({ id: "asc" }).lean();
-        const  categoryId  = Number(req.query.categoryId);
+        const categoryId = Number(req.query.categoryId);
+        const userId = req.user._id;
         if (categoryId) {
-            const records = await Record.find({ categoryId }).lean();
+            const records = await Record.find({ categoryId,userId}).lean();
             const category = categories.find((item) => {return item.id === categoryId})
-            console.log(category);
             return res.render("index", {records, categories, category,categoryIconList });
         } else {
-            const records = await Record.find().lean();
+            const records = await Record.find({userId}).lean();
             res.render("index", {records, categories,categoryIconList});
         }
     } catch (error) {
@@ -35,7 +34,8 @@ router.get("/new", async(req, res) => {
 router.get("/:_id/edit", async (req, res) => {
     try {
         const { _id } = req.params;
-        const record = await Record.findOne({ _id }).lean();
+        const userId = req.user._id;
+        const record = await Record.findOne({ _id ,userId}).lean();
         const categories = await Category.find().sort({ id: "asc" }).lean();
         res.render("edit", { record, categories});
     } catch (error) {
@@ -46,9 +46,9 @@ router.get("/:_id/edit", async (req, res) => {
 //新增資料
 router.post("/", async(req, res) => {
     const { name, date, categoryId, amount } = req.body;
-    console.log("new");
+    const userId = req.user._id;
     try {
-        await Record.create({ name, date, categoryId, amount });
+        await Record.create({ name, date, categoryId, amount ,userId});
         req.flash("success_msg","新增成功");
         res.redirect("/records");
     } catch (error) {
@@ -61,11 +61,12 @@ router.post("/", async(req, res) => {
 //修改資料
 router.put("/:_id", async(req, res) => {
     const { name, date, categoryId, amount } = req.body;
-    const {_id} = req.params;
+    const { _id } = req.params;
+    const userId = req.user._id;
     try {
-        await Record.updateOne({ _id }, { name, date, categoryId, amount })
+        await Record.updateOne({ _id }, { name, date, categoryId, amount ,userId})
         req.flash("success_msg","修改成功");
-    res.redirect("/records");
+        res.redirect("/records");
     } catch (error) {
         console.log(error);
     }
@@ -73,8 +74,9 @@ router.put("/:_id", async(req, res) => {
 //刪除資料
 router.delete("/:_id", async (req, res) => {
     const { _id } = req.params;
+    const userId = req.user._id;
     try {
-        await Record.deleteOne({ _id });
+        await Record.deleteOne({ _id,userId });
     } catch (error) {
         console.log(error);
     }

@@ -17,7 +17,7 @@ const RecordSchema = new mongoose.Schema({
     userId: {
         type: mongoose.ObjectId,
         ref: "User",
-        // required:true
+        required:true
     },
     categoryId: {
         type:String,
