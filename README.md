@@ -26,7 +26,9 @@ npm run seed
 ```
 當出現以下訊息表示建立成功:
 ```js
+connect to mongoDB.
 種子資料已建立完成
+connect to mongoDB.
 種子資料已建立完成
 ```
 6.執行程式
@@ -36,6 +38,7 @@ npm run start
 7.當cmd出現以下這行表示啟動成功
 ```js
 Express server is working on http://localhost:3000/
+connect to mongoDB.
 ```
 8.接著在瀏覽器輸入
 ```js
@@ -43,7 +46,7 @@ http://localhost:3000/
 ```
 種子資料的帳號為:
 ```bash
-email : user@example
+email : user@example.com
 password : 123456
 ```
 ## 開發環境
